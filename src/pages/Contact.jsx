@@ -20,14 +20,33 @@ const Contact = () => {
     });
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    // Simulate sending
-    console.log('Form submitted:', formData);
-    setSubmitted(true);
-    setTimeout(() => setSubmitted(false), 3000);
-    setFormData({ name: '', email: '', message: '' });
-  };
+const [loading, setLoading] = useState(false);
+
+const handleSubmit = async (e) => {
+  e.preventDefault();
+  setLoading(true);
+
+  try {
+    const response = await fetch('http://localhost:5000/api/contact', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(formData)
+    });
+
+    const data = await response.json();
+
+    if (response.ok) {
+      alert('✅ Thank you! Your message has been sent.');
+      setFormData({ name: '', email: '', message: '' });
+    } else {
+      alert(data.error || 'Failed to send message');
+    }
+  } catch (err) {
+    alert('Error connecting to server. Is the backend running?');
+  } finally {
+    setLoading(false);
+  }
+};
 
   return (
     <>
@@ -75,7 +94,9 @@ const Contact = () => {
                 style={{ width: '100%', padding: '10px', borderRadius: '4px', border: '1px solid #ccc' }}
               ></textarea>
             </div>
-            <button type="submit" className="btn" style={{ cursor: 'pointer' }}>Send Message</button>
+           <button type="submit" className="btn" disabled={loading}>
+                {loading ? 'Sending...' : 'Send Message'}
+          </button>
           </form>
 
           <div style={{ marginTop: '40px' }}>
