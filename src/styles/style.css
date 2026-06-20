@@ -1,0 +1,217 @@
+
+        @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Open+Sans:wght@400;500;600&display=swap');
+
+        :root {
+            --primary: #3a5f5f;
+            --accent: #c9a66b;
+            --light-bg: #f9f6f0;
+            --text: #333;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Open Sans', system-ui, sans-serif;
+            line-height: 1.75;
+            color: var(--text);
+            background: #fff;
+        }
+
+        header {
+            background: linear-gradient(rgba(0,0,0,0.0), rgba(0,0,0,0.0)), url('../img/hunter-sunset.jpg') center/cover no-repeat;
+            height: 70vh;
+            min-height: 520px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: white;
+            position: relative;
+        }
+
+        .logo {
+            position: absolute;
+            top: 120px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-family: 'Playfair Display', serif;
+            font-size: 2.1rem;
+            font-weight: 700;
+            letter-spacing: 3px;
+            color: white;
+            text-shadow: 0 3px 12px rgba(0,0,0,0.6);
+            z-index: 10;
+        }
+
+        .nav {
+            position: absolute;
+            top: 35px;
+            right: 40px;
+            display: flex;
+            gap: 25px;
+            font-size: 1.05rem;
+        }
+
+        .nav a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        .header-content {
+            max-width: 760px;
+            padding: 0 20px;
+        }
+
+        header h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 3.6rem;
+            line-height: 1.1;
+            margin-bottom: 20px;
+            text-shadow: 0 4px 15px rgba(0,0,0,0.7);
+        }
+
+        header p {
+            font-size: 1.35rem;
+            opacity: 0.95;
+        }
+
+        main {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 80px 40px 100px;
+            display: grid;
+            grid-template-columns: 260px 1fr;
+            gap: 60px;
+        }
+
+        .sidebar {
+            background: var(--light-bg);
+            padding: 35px 30px;
+            border-radius: 8px;
+            height: fit-content;
+            position: sticky;
+            top: 40px;
+        }
+
+        .sidebar h3 {
+            font-family: 'Playfair Display', serif;
+            color: var(--primary);
+            margin-bottom: 20px;
+            font-size: 1.4rem;
+        }
+
+        .sidebar ul {
+            list-style: none;
+        }
+
+        .sidebar li {
+            padding: 10px 0;
+            border-bottom: 1px solid #e5e0d5;
+        }
+
+        .sidebar a {
+            color: var(--primary);
+            text-decoration: none;
+        }
+
+        .content h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.8rem;
+            color: var(--primary);
+            margin-bottom: 30px;
+        }
+
+        .intro {
+            font-size: 1.22rem;
+            color: #444;
+            margin-bottom: 50px;
+            max-width: 720px;
+             
+        }
+
+        .benefits-list {
+            list-style: none;
+        }
+
+        .benefits-list li {
+            padding: 18px 0 18px 50px;
+            position: relative;
+            font-size: 1.15rem;
+            margin-bottom: 8px;
+            border-bottom: 1px solid #f0ece0;
+        }
+
+        .benefits-list li:before {
+            content: "●";
+            position: absolute;
+            left: 0;
+            color: var(--accent);
+            font-size: 1.6rem;
+            top: 17px;
+        }
+
+        .highlight-box {
+            background: var(--light-bg);
+            padding: 40px;
+            border-left: 8px solid var(--accent);
+            margin: 50px 0;
+            font-style: italic;
+            color: #2c3e3e;
+        }
+
+        .cta-section {
+            background: var(--primary);
+            color: white;
+            text-align: center;
+            padding: 70px 40px;
+            margin: 90px -40px 0;
+            border-radius: 0;
+        }
+
+        .cta-section h3 {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.4rem;
+            margin-bottom: 20px;
+        }
+
+        .btn {
+            display: inline-block;
+            background: var(--accent);
+            color: #222;
+            padding: 18px 45px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1.15rem;
+            margin-top: 20px;
+            transition: 0.3s;
+        }
+
+        .btn:hover {
+            background: #e0b87a;
+            transform: translateY(-3px);
+        }
+
+        footer {
+            background: #1f2a2a;
+            color: #ccc;
+            text-align: center;
+            padding: 60px 20px 40px;
+            font-size: 0.95rem;
+        }
+
+        @media (max-width: 900px) {
+            main {
+                grid-template-columns: 1fr;
+                gap: 40px;
+                padding: 60px 20px;
+            }
+            .nav { display: none; }
+            header h1 { font-size: 2.8rem; }
+        }
+    
