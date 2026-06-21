@@ -53,11 +53,7 @@ const Contact = () => {
 
   return (
     <>
-      <div className="header-content">
-        <h1>Contact</h1>
-        <p>Phone: (205) 703-6462</p>
-        <p>1001 Minnesota Ave West, Ste 101, Walker, MN 56484</p>
-      </div>
+     
 
       <main>
         <Sidebar />
