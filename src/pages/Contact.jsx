@@ -7,7 +7,9 @@ const Contact = () => {
     email: '',
     message: ''
   });
+  const [loading, setLoading] = useState(false);
   const [submitted, setSubmitted] = useState(false);
+  const [error, setError] = useState('');
 
   useEffect(() => {
     document.title = 'Contact | North Star Massage';
@@ -20,37 +22,42 @@ const Contact = () => {
     });
   };
 
-const [loading, setLoading] = useState(false);
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setLoading(true);
+    setError('');
 
-const handleSubmit = async (e) => {
-  e.preventDefault();
-  setLoading(true);
+    try {
+      const response = await fetch('https://north-star-massage.vercel.app/api/contact', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(formData)
+      });
 
-  try {
-    const response = await fetch('http://north-star-massage.vercel.app/api/contact', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(formData)
-    });
+      const data = await response.json();
 
-    const data = await response.json();
-
-    if (response.ok) {
-      alert('✅ Thank you! Your message has been sent.');
-      setFormData({ name: '', email: '', message: '' });
-    } else {
-      alert(data.error || 'Failed to send message');
+      if (response.ok) {
+        setSubmitted(true);
+        setFormData({ name: '', email: '', message: '' });
+        setTimeout(() => setSubmitted(false), 5000);
+      } else {
+        setError(data.error || 'Failed to send message');
+      }
+    } catch (err) {
+      setError('Error connecting to server. Please try again.');
+      console.error(err);
+    } finally {
+      setLoading(false);
     }
-  } catch (err) {
-    alert('Error connecting to server. Is the backend running?');
-  } finally {
-    setLoading(false);
-  }
-};
+  };
 
   return (
     <>
-    
+      <div className="header-content">
+        <h1>Contact</h1>
+        <p>Phone: (205) 703-6462</p>
+        <p>1001 Minnesota Ave West, Ste 101, Walker, MN 56484</p>
+      </div>
 
       <main>
         <Sidebar />
@@ -58,7 +65,8 @@ const handleSubmit = async (e) => {
           <h2>Get In Touch</h2>
           <p className="intro">Ready to schedule or have questions? Reach out today!</p>
 
-          {submitted && <p style={{ color: 'green', fontWeight: 'bold' }}>Thank you! Your message has been sent.</p>}
+          {submitted && <p style={{ color: 'green', fontWeight: 'bold' }}>✅ Thank you! Your message has been sent.</p>}
+          {error && <p style={{ color: 'red', fontWeight: 'bold' }}>{error}</p>}
 
           <form onSubmit={handleSubmit} style={{ maxWidth: '600px' }}>
             <div style={{ marginBottom: '15px' }}>
@@ -69,7 +77,7 @@ const handleSubmit = async (e) => {
                 value={formData.name} 
                 onChange={handleChange}
                 required 
-                style={{ width: '100%', padding: '10px', borderRadius: '4px', border: '1px solid #ccc' }}
+                style={{ width: '100%', padding: '12px', borderRadius: '4px', border: '1px solid #ccc' }}
               />
             </div>
             <div style={{ marginBottom: '15px' }}>
@@ -80,7 +88,7 @@ const handleSubmit = async (e) => {
                 value={formData.email} 
                 onChange={handleChange}
                 required 
-                style={{ width: '100%', padding: '10px', borderRadius: '4px', border: '1px solid #ccc' }}
+                style={{ width: '100%', padding: '12px', borderRadius: '4px', border: '1px solid #ccc' }}
               />
             </div>
             <div style={{ marginBottom: '15px' }}>
@@ -91,17 +99,21 @@ const handleSubmit = async (e) => {
                 onChange={handleChange}
                 rows="6"
                 required 
-                style={{ width: '100%', padding: '10px', borderRadius: '4px', border: '1px solid #ccc' }}
+                style={{ width: '100%', padding: '12px', borderRadius: '4px', border: '1px solid #ccc' }}
               ></textarea>
             </div>
-           <button type="submit" className="btn" disabled={loading}>
-                {loading ? 'Sending...' : 'Send Message'}
-          </button>
+            <button 
+              type="submit" 
+              className="btn" 
+              disabled={loading}
+              style={{ cursor: loading ? 'wait' : 'pointer' }}
+            >
+              {loading ? 'Sending...' : 'Send Message'}
+            </button>
           </form>
 
           <div style={{ marginTop: '40px' }}>
             <p><strong>Call or Text:</strong> (205) 703-6462</p>
-             <p>1001 Minnesota Ave West, Ste 101, Walker, MN 56484</p>
           </div>
         </div>
       </main>
